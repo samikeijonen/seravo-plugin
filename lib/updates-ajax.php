@@ -62,6 +62,38 @@ function seravo_plugin_version_update() {
   exec('wp-seravo-plugin-update &');
 }
 
+function seravo_default_config_file() {
+  exec('grep -l "^set \$mode php" /data/wordpress/nginx/*.conf | LC_COLLATE=C sort | tail -1', $config_file);
+  $config_file = $config_file[0];
+  $configs_array = array( '/data/wordpress/nginx/custom.conf', '/data/wordpress/nginx/examples.conf', '/data/wordpress/nginx/php.conf' );
+
+  if ( ! in_array($config_file, $configs_array) ) {
+    return false;
+  }
+
+  return true;
+}
+
+function check_php_config_files() {
+  $dir = '/data/wordpress/nginx';
+
+  exec('grep -l "^set \$mode php" ' . $dir . '/*.conf | tail -1', $config_file);
+  array( exec('grep -l "^set \$mode php" ' . $dir . '/*.conf --exclude=php.conf | LC_COLLATE=C sort', $files) );
+
+  $config_file = $config_file[0];
+
+  foreach ( $files as $file ) {
+    $lines = file($file);
+
+    foreach ( $lines as &$line ) {
+      if ( substr($line, 0, strlen('set $mode php')) ) {
+        $line = '#' . $line;
+        file_put_contents($file, $lines);
+      }
+    }
+  }
+}
+
 function seravo_ajax_updates() {
   check_ajax_referer('seravo_updates', 'nonce');
   switch ( sanitize_text_field($_REQUEST['section']) ) {
@@ -79,6 +111,14 @@ function seravo_ajax_updates() {
 
     case 'seravo_plugin_version_update':
       echo seravo_plugin_version_update();
+      break;
+
+    case 'seravo_default_config_file':
+      echo seravo_default_config_file();
+      break;
+
+    case 'check_php_config_files':
+      echo check_php_config_files();
       break;
 
     default:

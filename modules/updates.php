@@ -126,7 +126,7 @@ if ( ! class_exists('Updates') ) {
       // WP_error-object
       if ( gettype($site_info) === 'array' ) {
         ?>
-        <h2><?php _e('Opt-out from updates by Seravo', 'seravo'); ?></h2>
+        <h2 xmlns="http://www.w3.org/1999/html"><?php _e('Opt-out from updates by Seravo', 'seravo'); ?></h2>
         <?php
         if ( $site_info['seravo_updates'] === true ) {
           $checked = 'checked="checked"';
@@ -309,7 +309,6 @@ if ( ! class_exists('Updates') ) {
         _e('See also <a target="_blank" href="https://help.seravo.com/en/knowledgebase/13/docs/107-set-your-site-to-use-newest-php-version">more information on PHP version upgrades</a>.', 'seravo');
         ?>
       </p>
-
       <div id="seravo-php-version">
         <?php
         $php_versions = array(
@@ -354,8 +353,14 @@ if ( ! class_exists('Updates') ) {
         }
         ?>
         <br>
+        <span id="overwrite-config-files-span">
+          <input type="checkbox" id="overwrite-config-files" class="hidden">
+          <?php
+            _e('I\'m aware of the risks associated with edits to the PHP configuration files and want to proceed with the change.', 'seravo');
+          ?>
+          <br>
+        </span>
         <button id='change-php-version-button'><?php _e('Change version', 'seravo'); ?></button>
-        <br>
       </div>
       <div id="change-php-version-status" class="hidden">
         <img src="/wp-admin/images/spinner.gif" style="display:inline-block">
@@ -373,7 +378,7 @@ if ( ! class_exists('Updates') ) {
         </p>
         <p id="activation-failed-line" class="hidden"><?php _e('PHP version change failed. Using fallback PHP 5.6.', 'seravo'); ?></p>
       </div>
-      <?php
+        <?php
     }
 
     public static function seravo_plugin_updater_postbox() {
