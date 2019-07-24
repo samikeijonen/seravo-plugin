@@ -87,12 +87,17 @@ if ( ! class_exists('Reports') ) {
         wp_enqueue_script('seravo_reports');
 
         $loc_translation = array(
-          'no_data'     => __('No data returned for the section.', 'seravo'),
-          'failed'      => __('Failed to load. Please try again.', 'seravo'),
-          'no_reports'  => __('No reports found at /data/slog/html/. Reports should be available within a month of the creation of a new site.', 'seravo'),
-          'view_report' => __('View report', 'seravo'),
-          'ajaxurl'     => admin_url('admin-ajax.php'),
-          'ajax_nonce'  => wp_create_nonce('seravo_reports'),
+          'no_data'         => __('No data returned for the section.', 'seravo'),
+          'failed'          => __('Failed to load. Please try again.', 'seravo'),
+          'no_reports'      => __('No reports found at /data/slog/html/. Reports should be available within a month of the creation of a new site.', 'seravo'),
+          'view_report'     => __('View report', 'seravo'),
+          'expired_keys'    => __('Expired keys', 'seravo'),
+          'evicted_keys'    => __('Evicted keys', 'seravo'),
+          'keyspace_hits'   => __('Keyspace hits', 'seravo'),
+          'keyspace_misses' => __('Keyspace misses', 'seravo'),
+          'hit_rate'        => __('Hit rate', 'seravo'),
+          'ajaxurl'         => admin_url('admin-ajax.php'),
+          'ajax_nonce'      => wp_create_nonce('seravo_reports'),
 
         );
         wp_localize_script('seravo_reports', 'seravo_reports_loc', $loc_translation);
@@ -134,7 +139,8 @@ if ( ! class_exists('Reports') ) {
       <div class="front_cache_status_loading">
         <img src="/wp-admin/images/spinner.gif">
       </div>
-      <pre id="front_cache_status"></pre>
+      <div id="front_cache_status"></div>
+      <button class="button test-cache-btn"><?php _e('Test again', 'seravo'); ?></button>
       <?php
     }
 

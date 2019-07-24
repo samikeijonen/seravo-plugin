@@ -116,9 +116,7 @@ function seravo_report_front_cache_status() {
     $result = 'No front cache available in this WordPress instance.';
   }
 
-  array_unshift($output, $result, '');
-
-  return $output;
+  return ['result' => $result, 'output' => $output];
 }
 
 function seravo_ajax_reports() {
