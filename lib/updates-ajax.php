@@ -38,6 +38,11 @@ function seravo_php_check_version() {
   }
 }
 
+function seravo_check_php_compatibility() {
+  $ajax_test_string = 'Testing ajax';
+  return $ajax_test_string;
+}
+
 function seravo_ajax_updates() {
   check_ajax_referer('seravo_updates', 'nonce');
   switch ( sanitize_text_field($_REQUEST['section']) ) {
@@ -47,6 +52,10 @@ function seravo_ajax_updates() {
 
     case 'seravo_php_check_version':
       echo seravo_php_check_version();
+      break;
+
+    case 'seravo_check_php_compatibility':
+      echo seravo_check_php_compatibility();
       break;
 
     default:

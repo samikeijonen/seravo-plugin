@@ -133,6 +133,27 @@ jQuery(document).ready(function($) {
     $buttonsDiv.html(generateButtons(emails));
   });
 
+  jQuery('#check-php-compatibility-button').click(function() {
+    jQuery(this).fadeOut(400, function(){
+      jQuery(this).hide();
+    });
+    jQuery("#check-php-compatibility-status").fadeOut(400, function() {
+      jQuery(this).show();
+    });
+    checkPHPCompatibility();
+  });
+
+  function checkPHPCompatibility() {
+    jQuery.post(
+      seravo_updates_loc-ajaxurl, {
+        'action': 'seravo_ajax_updates',
+        'section': 'seravo_check_php_compatibility',
+        'nonce': seravo_updates_loc.ajax_nonce,
+    });
+
+    
+  }
+
   jQuery('#change-php-version-button').click(function() {
     jQuery("#change-php-version-status").fadeOut(400, function() {
       jQuery(this).show();

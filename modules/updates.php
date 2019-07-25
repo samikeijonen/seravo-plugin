@@ -297,6 +297,13 @@ if ( ! class_exists('Updates') ) {
         );
         ?>
       </p>
+        
+      <button id='check-php-compatibility-button'><?php _e('Check PHP compatibility', 'seravo'); ?></button>
+      
+      <div id="check-php-compatibility-status" class="hidden">
+        <img src="/wp-admin/images/spinner.gif" style="display:inline-block">
+      </div>
+      
       <p>
         <?php
         _e('See also <a target="_blank" href="https://help.seravo.com/en/knowledgebase/13/docs/107-set-your-site-to-use-newest-php-version">more information on PHP version upgrades</a>.', 'seravo');
