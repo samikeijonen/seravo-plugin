@@ -92,6 +92,10 @@ function check_php_config_files() {
       }
     }
   }
+
+  if ( file_exists('/data/wordpress/.git') ) {
+    exec('cd /data/wordpress/ && git add nginx/*.conf && s-git-commit -m "Set new PHP version" && cd /data/wordpress/htdocs/wordpress/wp-admin');
+  }
 }
 
 function seravo_ajax_updates() {
